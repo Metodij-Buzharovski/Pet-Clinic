@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index() {
         return view("index",[
             'petCount' => count(Pet::all()),
-            'userCount' => count(User::all())
+            'userCount' => count(User::all()->where('role', 'client'))
         ]);
     }
 }

@@ -5,32 +5,18 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/pets">Animals</a></li>
-            <li class="breadcrumb-item active">New animal</li>
+            <li class="breadcrumb-item active">Edit</li>
         </ol>
 
         <div class="row">
             <div class="col-md-6 col-12">
-                <form method="post" action="/pets/store">
+                <form method="post" action="/pets/{{$pet->id}}">
                     @csrf
-
-                    @can('medicalPersonelOnly', auth()->user())
-                    <div class="form-group">
-                        <label class="control-label">Owner:</label>
-                        <select name="user_id" class="form-control" id="id_user_id" value="{{old('user_id')}}">
-                            @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->id}} {{$user->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @endcan
-                    @can('clientOnly',auth()->user())
-                    <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                    @endcan
-
+                    @method('PUT')
                     <div class="form-group">
                         <label for="pet_name">Pet name:</label>
 
-                        <input type="text" name="name" class="form-control" maxlength="30" id="pet_name" value="{{old('name')}}"/>
+                        <input type="text" name="name" class="form-control" maxlength="30" id="pet_name" value="{{$pet->name}}"/>
                         @error('name')
                         <p style="color: red">{{$message}}</p>
                         @enderror
@@ -41,7 +27,7 @@
                     <div class="form-group">
                         <label for="pet_breed">Breed:</label>
 
-                        <input type="text" name="breed" class="form-control" maxlength="30" id="pet_breed" value="{{old('breed')}}"/>
+                        <input type="text" name="breed" class="form-control" maxlength="30" id="pet_breed" value="{{$pet->breed}}"/>
                         @error('breed')
                         <p style="color: red">{{$message}}</p>
                         @enderror
@@ -52,7 +38,7 @@
                     <div class="form-group">
                         <label for="pet_age">Age:</label>
 
-                        <input type="number" name="age" class="form-control" id="pet_age" value="{{old('age')}}"/>
+                        <input type="number" name="age" class="form-control" id="pet_age" value="{{$pet->age}}"/>
                         @error('age')
                         <p style="color: red">{{$message}}</p>
                         @enderror
@@ -61,7 +47,7 @@
                     <div class="form-group">
                         <label for="pet_weight">Weight:</label>
 
-                        <input type="number" name="weight" class="form-control" id="pet_weight" value="{{old('weight')}}"/>
+                        <input type="number" name="weight" class="form-control" id="pet_weight" value="{{$pet->weight}}"/>
                         @error('weight')
                         <p style="color: red">{{$message}}</p>
                         @enderror

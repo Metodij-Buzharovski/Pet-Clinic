@@ -1,69 +1,122 @@
-@extends('layouts.app')
-@section('content')
-<div class="container-fluid">
-    <!-- Breadcrumbs-->
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/users">Users</a></li>
-        <li class="breadcrumb-item active">New user</li>
-    </ol>
+<!DOCTYPE html>
+<head>
 
-    <div class="row">
-        <div class="col-md-6 col-12">
-            <form method="post" action="/users/store">
-                @csrf
+    <title>Pet Clinic</title>
 
-                <div class="form-group">
-                    <label for="id_first_name">Name:</label>
+    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('js/jquery/jquery-ui.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('toastr/toastr.css') }}" rel="stylesheet"/>
+    <script src="{{ asset('toastr/toastr_messages.js') }}"></script>
+    <link href="{{ asset('css/multiselect.css') }}" rel="stylesheet">
+</head>
 
-                    <input type="text" name="name" class="form-control" maxlength="30" id="id_first_name" value="{{old('name')}}"/>
-                    @error('name')
-                    <p style="color: red">{{$message}}</p>
-                    @enderror
-                </div>
+<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="/">Pet Clinic</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
 
-                <div class="form-group">
-                    <label for="id_email">Email address:</label>
+<!-- Page Content -->
+<div class="content-wrapper">
 
-                    <input type="text" name="email" class="form-control" maxlength="254" id="id_email" value="{{old('email')}}"/>
-                    @error('email')
-                    <p style="color: red">{{$message}}</p>
-                    @enderror
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">New user</li>
+        </ol>
 
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <form method="post" action="/users/store">
+                    @csrf
 
-                </div>
+                    <div class="form-group">
+                        <label for="id_first_name">Name:</label>
 
-                <div class="form-group">
-                    <label for="id_password1">Password:</label>
+                        <input type="text" name="name" class="form-control" maxlength="30" id="id_first_name" value="{{old('name')}}"/>
+                        @error('name')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
+                    </div>
 
-                    <input type="password" name="password" class="form-control" id="id_password1" value="{{old('password')}}"/>
-                    @error('password')
-                    <p style="color: red">{{$message}}</p>
-                    @enderror
+                    <div class="form-group">
+                        <label for="id_email">Email address:</label>
 
-
-                </div>
-
-                <div class="form-group">
-                    <label for="id_password2">Password confirmation:</label>
-
-                    <input type="password" name="password_confirmation" class="form-control" id="id_password2" value="{{old('password_confirmation')}}"/>
-                    @error('password_confirmation')
-                    <p style="color: red">{{$message}}</p>
-                    @enderror
-
-
-                    <small class="form-text text-muted">
-                        Enter the same password as before, for verification.
-                    </small>
-
-                </div>
+                        <input type="text" name="email" class="form-control" maxlength="254" id="id_email" value="{{old('email')}}"/>
+                        @error('email')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
 
 
-                <button type="submit" name="action" value="save" class="btn btn-primary">Save</button>
-                <a href="/users" class="btn btn-secondary">Back</a>
-            </form>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password1">Password:</label>
+
+                        <input type="password" name="password" class="form-control" id="id_password1" value="{{old('password')}}"/>
+                        @error('password')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password2">Password confirmation:</label>
+
+                        <input type="password" name="password_confirmation" class="form-control" id="id_password2" value="{{old('password_confirmation')}}"/>
+                        @error('password_confirmation')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
+
+
+                        <small class="form-text text-muted">
+                            Enter the same password as before, for verification.
+                        </small>
+
+                    </div>
+
+
+                    <button type="submit" name="action" value="save" class="btn btn-primary">Save</button>
+                    <a href="/" class="btn btn-secondary">Back</a><br>
+                    <p style="margin-top: 1%">Already have an account? <a href="/login">Log in</a></p>
+                </form>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <br>
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>&copy; Copyright 2023 Pet Clinic</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
 </div>
-@endsection
+
+
+<script src="{{ asset('js/jquery/jquery.js') }}"></script>
+<script src="{{ asset('js/jquery/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/datepicker.js') }}"></script>
+<script src="{{ asset('toastr/toastr.js') }}"></script>
+<script src="{{ asset('js/multiselect/multiselect.js') }}"></script>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('js/sb-admin.min.js') }}"></script>
+</body>
+</html>

@@ -10,7 +10,21 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="float-left"><h5 class="card-title">List of users</h5></div>
+            <div class="float-right"><a href="/users/create" class="btn btn-primary">Create new</a></div>
         </div>
+        <br>
+        @can('medicalPersonelOnly', auth()->user())
+            <form action="/users">
+                <div class="input-group col-md-4">
+                    <input class="form-control py-2" type="search" placeholder="search" id="example-search-input" name="search">
+                    <span class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">
+            <i class="fa fa-search"></i>
+        </button>
+      </span>
+                </div>
+            </form>
+        @endcan
         <div class="card-body">
             <div class="table-responsive">
                 <div id="dataTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">

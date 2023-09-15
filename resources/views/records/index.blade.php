@@ -11,7 +11,9 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="float-left"><h5 class="card-title">Records List</h5></div>
+            @can('adminAndDoctorOnly',auth()->user())
             <div class="float-right"><a href="/records/{{$pet_id}}/create" class="btn btn-primary">Create new</a></div>
+                @endcan
         </div>
         <div class="card-body">
             <div class="table-responsive">

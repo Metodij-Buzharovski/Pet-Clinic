@@ -18,6 +18,7 @@ class PetFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'user_id' => 2,
             'breed' => 'dog',
             'age' => $this->faker->numberBetween(0,20),
             'weight' => $this->faker->randomFloat(2,1.4,110)

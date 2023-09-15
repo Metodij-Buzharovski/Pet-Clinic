@@ -10,12 +10,18 @@
     <link href="{{ asset('toastr/toastr.css') }}" rel="stylesheet"/>
     <script src="{{ asset('toastr/toastr_messages.js') }}"></script>
     <link href="{{ asset('css/multiselect.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <style>
+        .pointer {
+            cursor: default !important;
+        }
+    </style>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="/">Pet Clinic</a>
+    <a class="navbar-brand" href="/">PetClinic</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,6 +31,7 @@
 
         <!-- Sidebar menu -->
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            @auth
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
                 <a class="nav-link" href="/">
                     <i class="fa fa-fw fa-home"></i>
@@ -37,36 +44,66 @@
                     <span class="nav-link-text">Animals</span>
                 </a>
             </li>
+            @can('medicalPersonelOnly', auth()->user())
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Clients">
                 <a class="nav-link" href="/users">
                     <i class="fa fa-fw fa-user"></i>
                     <span class="nav-link-text">Clients</span>
                 </a>
             </li>
+            @endcan
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reports">
-                <a class="nav-link" href="/report/">
+                <a class="nav-link" href="/appointments">
                     <i class="fa fa-fw fa-list"></i>
-                    <span class="nav-link-text">Reports</span>
+                    <span class="nav-link-text">Appointments</span>
                 </a>
             </li>
-
+            @can('adminOnly', auth()->user())
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Users">
                 <a class="nav-link" href="/staff">
                     <i class="fa fa-fw fa-user-md"></i>
                     <span class="nav-link-text">Medical Personnel</span>
                 </a>
             </li>
-
+            @endcan
+            @endauth
+            @can('clientOnly', auth()->user())
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contact">
+                    <a class="nav-link" href="/contacts">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Contact</span>
+                    </a>
+                </li>
+                @endcan
+                @auth
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Blog">
+                    <a class="nav-link" href="/blogs">
+                        <i class="fa fa-fw fa-comment"></i>
+                        <span class="nav-link-text">Blog</span>
+                    </a>
+                </li>
+                @endauth
         </ul>
-
         <!-- Top menu -->
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/register/"><i class="fa fa-fw fa-sign-in"></i>Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout/"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
-            </li>
+            @auth
+                <li class="nav-item">
+                    <a class="pointer nav-link "><i></i>Welcome {{auth()->user()->name}}</a>
+                </li>
+                <form class="inline" method="POST" action="/logout" id="jsform">
+                    @csrf
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="document.getElementById('jsform').submit();"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                    </li>
+                </form>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link" href="/login"><i class="fa fa-fw fa-sign-out"></i>Login</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/register"><i class="fa fa-fw fa-sign-in"></i>Register</a>
+                </li>
+            @endauth
         </ul>
 
     </div>
