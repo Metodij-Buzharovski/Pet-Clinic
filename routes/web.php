@@ -36,7 +36,15 @@ Route::get('/login', [UserController::class, 'login'])->name('login')->middlewar
 
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
-Route::post('/authenticate', [UserController::class, 'authenticate'])->middleware('guest');;
+Route::post('/authenticate', [UserController::class, 'authenticate'])->middleware('guest');
+
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->middleware('auth');
+
+Route::put('/users/{user}', [UserController::class, 'update'])->middleware('auth');
+
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->middleware('auth');
+
+
 
 
 Route::get('/staff', [UserController::class, 'staff'])->middleware('auth');
@@ -44,6 +52,13 @@ Route::get('/staff', [UserController::class, 'staff'])->middleware('auth');
 Route::get('/staff/add', [UserController::class, 'createStaff'])->middleware('auth');
 
 Route::post('/staff/store', [UserController::class, 'storeStaff'])->middleware('auth');
+
+Route::get('/staff/{user}/edit', [UserController::class, 'editStaff'])->middleware('auth');
+
+Route::put('/staff/{user}', [UserController::class, 'updateStaff'])->middleware('auth');
+
+Route::delete('/staff/{user}', [UserController::class, 'destroyStaff'])->middleware('auth');
+
 
 
 

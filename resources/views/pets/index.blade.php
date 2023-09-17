@@ -10,7 +10,9 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="float-left"><h5 class="card-title">List of animals</h5></div>
+            @can('clientAndAdminOnly',auth()->user())
             <div class="float-right"><a href="/pets/add" class="btn btn-primary">Create new</a></div>
+                @endcan
         </div>
 
         <br>
@@ -60,18 +62,18 @@
                                     <td>{{$pet->age}}</td>
                                     <td>{{$pet->weight}}</td>
                                     <td><div class="h-100 d-flex align-items-center justify-content-center"><a href="/records/{{$pet->id}}" class="btn btn-primary">View Records</a></div></td>
+                                    @can('clientAndAdminOnly',auth()->user())
                                     <td>
                                         <div  class="h-100 d-flex align-items-center justify-content-center">
                                                 <a href="/pets/{{$pet->id}}/edit" class="btn btn-success">Edit</a>
-                                        @can('medicalPersonelOnly',auth()->user())
                                         <form class="inline" method="POST" action="/pets/{{$pet->id}}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                            @endcan
                                         </div>
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

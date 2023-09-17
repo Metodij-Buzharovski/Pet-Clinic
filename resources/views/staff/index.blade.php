@@ -51,6 +51,18 @@
                                     <td>{{$user->role}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->password}}</td>
+                                    @can('adminOnly',auth()->user())
+                                        <td style="width: 10%">
+                                            <div  class="d-flex align-items-center justify-content-center">
+                                                <a href="/staff/{{$user->id}}/edit" class="btn btn-success">Edit</a>
+                                                <form class="inline" method="POST" action="/staff/{{$user->id}}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>

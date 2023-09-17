@@ -10,6 +10,7 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     public function index() {
+        $this->authorize('medicalPersonelOnly',auth()->user());
         return view("users.index", [
             'users' => User::latest()->where('role', 'client')->filter(request(['search']))->get()
         ]);
@@ -20,6 +21,7 @@ class UserController extends Controller
             return view('auth.register');
         }
         else{
+            $this->authorize('adminOnly',auth()->user());
             return view('users.create');
         }
     }
@@ -33,6 +35,7 @@ class UserController extends Controller
             ]);
         }
         else{
+            $this->authorize('adminOnly',auth()->user());
             $formFields = $request->validate([
                 'name' => ['required', 'min:2'],
                 'email' => ['required', 'email', Rule::unique('users', 'email')],
@@ -107,6 +110,54 @@ class UserController extends Controller
 
         User::create($formFields);
 
+        return redirect('/staff');
+    }
+
+
+    public function edit(User $user) {
+        $this->authorize('adminOnly',auth()->user());
+            return view('users.edit', ['user' => $user]);
+    }
+
+    public function update(Request $request, User $user) {
+        $this->authorize('adminOnly',auth()->user());
+            $formFields = $request->validate([
+                'name' => ['required', 'min:2'],
+                'email' => ['required', 'email'],
+                'password' => 'required|min:4']);
+            $user->update($formFields);
+
+            return redirect('/users');
+    }
+
+    public function destroy(User $user)
+    {
+        $this->authorize('adminOnly',auth()->user());
+            $user->delete();
+            return redirect('/users');
+    }
+
+    public function editStaff(User $user) {
+        $this->authorize('adminOnly',auth()->user());
+        return view('staff.edit', ['user' => $user]);
+    }
+
+    public function updateStaff(Request $request, User $user) {
+        $this->authorize('adminOnly',auth()->user());
+        $formFields = $request->validate([
+            'name' => 'required',
+            'role' => 'required',
+            'email' => ['required', 'email'],
+            'password' => 'required']);
+        $user->update($formFields);
+
+        return redirect('/staff');
+    }
+
+    public function destroyStaff(User $user)
+    {
+        $this->authorize('adminOnly',auth()->user());
+        $user->delete();
         return redirect('/staff');
     }
 }

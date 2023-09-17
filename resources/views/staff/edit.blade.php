@@ -1,0 +1,66 @@
+@extends('layouts.app')
+@section('content')
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/users">Clients</a></li>
+            <li class="breadcrumb-item active">Edit Staff</li>
+        </ol>
+
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <form method="post" action="/staff/{{$user->id}}">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="id_first_name">Name:</label>
+
+                        <input type="text" name="name" class="form-control" maxlength="30" id="id_first_name" value="{{$user->name}}"/>
+                        @error('name')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Role:</label>
+                        <select name="role" class="form-control" id="id_role" value="{{$user->role}}}">
+                            <option value="doctor">Doctor</option>
+
+                            <option value="assistant">Assistant</option>
+
+                            <option value="admin">Admin</option>
+                        </select>
+                        @error('role')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_email">Email address:</label>
+
+                        <input type="text" name="email" class="form-control" maxlength="254" id="id_email" value="{{$user->email}}"/>
+                        @error('email')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password1">Password:</label>
+
+                        <input type="password" name="password" class="form-control" id="id_password1" value="{{$user->password}}"/>
+                        @error('password')
+                        <p style="color: red">{{$message}}</p>
+                        @enderror
+
+
+                    </div>
+                    <button type="submit" name="action" value="save" class="btn btn-primary">Save</button>
+                    <a href="/users" class="btn btn-secondary">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection

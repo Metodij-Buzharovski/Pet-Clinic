@@ -10,10 +10,11 @@ use Illuminate\Http\Request;
 class AppointmentController extends Controller
 {
     public function index() {
+        $ldate = date('Y-m-d');
         if (auth()->user()->role == 'client') {
             $pets = auth()->user()->pets;
             foreach ($pets as $pet){
-                $temp[] = Appointment::all()->where('pet_id', $pet->id);
+                $temp[] = Appointment::all()->where('pet_id', $pet->id)->where('date', '>=', $ldate);
 
             }
             foreach ($temp as $x){
@@ -24,10 +25,10 @@ class AppointmentController extends Controller
         }
         else if (auth()->user()->role == 'doctor') {
             $temp = Appointment::all()->sortBy('date');
-            $appointments = $temp->where('doctor_id', auth()->id());
+            $appointments = $temp->where('doctor_id', auth()->id())->where('date', '>=', $ldate);
         }
         else {
-            $appointments = Appointment::all()->sortBy('date');
+            $appointments = Appointment::all()->where('date', '>=', $ldate)->sortBy('date');
         }
         return view("appointments.index",[
             'appointments' => $appointments

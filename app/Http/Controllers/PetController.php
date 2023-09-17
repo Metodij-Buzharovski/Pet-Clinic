@@ -22,13 +22,15 @@ class PetController extends Controller
 
     public function create()
     {
+        $this->authorize('clientAndAdminOnly',auth()->user());
         return view('pets.create',[
-            'users' => User::all()
+            'users' => User::latest()->whereNotIn('role',array('admin','doctor','assistant'))->get()
         ]);
     }
 
     public function store(Request $request)
     {
+        $this->authorize('clientAndAdminOnly',auth()->user());
         $formFields = $request->validate([
             'name' => 'required',
             'user_id' => 'required',
@@ -48,7 +50,7 @@ class PetController extends Controller
     }
 
     private function clientsPetOnly(Pet $pet): bool{
-        if((auth()->user()->role!='client') || (auth()->id() == $pet->user_id)){
+        if((auth()->user()->role=='admin') || (auth()->id() == $pet->user_id)){
             return true;
         }
             return false;
@@ -61,7 +63,6 @@ class PetController extends Controller
         else{
             abort(403,'THIS ACTION IS UNAUTHORIZED');
         }
-        return view('pets.edit', ['pet' => $pet]);
     }
 
     public function update(Request $request, Pet $pet) {
@@ -84,8 +85,12 @@ class PetController extends Controller
 
     public function destroy(Pet $pet)
     {
-        $this->authorize('medicalPersonelOnly', auth()->user());
-        $pet->delete();
-        return redirect('/pets');
+        if($this->clientsPetOnly($pet)){
+            $pet->delete();
+            return redirect('/pets');
+        }
+        else{
+            abort(403,'THIS ACTION IS UNAUTHORIZED');
+        }
     }
 }

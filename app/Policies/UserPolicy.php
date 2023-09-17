@@ -26,6 +26,10 @@ class UserPolicy
     {
         return ($user->role=='admin');
     }
+    public function clientAndAdminOnly(User $user): bool
+    {
+        return ($user->role=='client') || ($user->role=='admin');
+    }
 
     public function clientOnly(User $user): bool
     {

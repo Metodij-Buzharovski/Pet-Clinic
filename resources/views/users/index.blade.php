@@ -10,7 +10,9 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="float-left"><h5 class="card-title">List of users</h5></div>
+            @can('adminOnly',auth()->user())
             <div class="float-right"><a href="/users/create" class="btn btn-primary">Create new</a></div>
+                @endcan
         </div>
         <br>
         @can('medicalPersonelOnly', auth()->user())
@@ -48,6 +50,18 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->role}}</td>
                                     <td>{{$user->email}}</td>
+                                    @can('adminOnly',auth()->user())
+                                    <td style="width: 10%">
+                                        <div  class="d-flex align-items-center justify-content-center">
+                                            <a href="/users/{{$user->id}}/edit" class="btn btn-success">Edit</a>
+                                            <form class="inline" method="POST" action="/users/{{$user->id}}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                        @endcan
                                 </tr>
                             @endforeach
                             </tbody>

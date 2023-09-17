@@ -13,7 +13,7 @@
                 <form method="post" action="/pets/store">
                     @csrf
 
-                    @can('medicalPersonelOnly', auth()->user())
+                    @can('adminOnly', auth()->user())
                     <div class="form-group">
                         <label class="control-label">Owner:</label>
                         <select name="user_id" class="form-control" id="id_user_id" value="{{old('user_id')}}">
