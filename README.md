@@ -78,4 +78,4 @@ healthcare management.
 
 <h4><b>12.	Conclusion</b><br></h4>
 •	The Laravel Pet Clinic project has successfully delivered an easy to use, user-friendly solution for pet care management. It serves as a valuable tool for both pet owners and clinic staff.
-<br><br>
+<br>
